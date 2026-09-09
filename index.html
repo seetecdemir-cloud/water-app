@@ -1,0 +1,1951 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Water</title>
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#189AB4">
+<link rel="icon" href="icons/icon-192.png">
+<link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="Water">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg-top: #EAF7F9;
+    --bg-bottom: #DCF1F4;
+    --ink: #0E3A42;
+    --ink-soft: #3E6B72;
+    --teal: #189AB4;
+    --teal-deep: #0E5C68;
+    --wave: #6FD6E8;
+    --wave-light: #BFEFF2;
+    --btn-bg: #189AB4;
+    --btn-icon: #FFFFFF;
+    --card: #FFFFFF;
+  }
+
+  *{ box-sizing: border-box; }
+
+  html, body{
+    margin: 0;
+    padding: 0;
+    min-height: 100%;
+  }
+
+  body{
+    font-family: 'Vazirmatn', Tahoma, 'Segoe UI', Arial, sans-serif;
+    background: linear-gradient(180deg, var(--bg-top) 0%, var(--bg-bottom) 100%);
+    color: var(--ink);
+    min-height: 100dvh;
+    -webkit-tap-highlight-color: transparent;
+    overflow-x: hidden;
+    transition: background 900ms ease;
+  }
+
+  .season-badge{
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--teal);
+    background: rgba(255,255,255,0.6);
+    padding: 5px 14px;
+    border-radius: 999px;
+    margin-bottom: 14px;
+    transition: color 900ms ease;
+  }
+
+  .goal-hint{
+    font-size: 13.5px;
+    color: var(--teal-deep);
+    font-weight: 600;
+    margin-top: 22px;
+    transition: color 900ms ease;
+  }
+
+  .edit-profile{
+    font-size: 12.5px;
+    color: var(--ink-soft);
+    text-decoration: underline;
+    background: none;
+    border: none;
+    font-family: inherit;
+    cursor: pointer;
+    margin-top: 2px;
+    padding: 4px;
+  }
+
+  .actions-row{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 16px;
+    margin-top: 2px;
+  }
+
+  .icon-nav-row{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 6px;
+  }
+
+  .icon-nav-btn{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 5px;
+    background: rgba(255,255,255,0.6);
+    border: none;
+    border-radius: 14px;
+    padding: 10px 15px;
+    min-width: 68px;
+    cursor: pointer;
+    color: var(--ink-soft);
+    font-family: inherit;
+    transition: background 150ms ease;
+  }
+
+  .icon-nav-btn:active{
+    background: rgba(255,255,255,0.95);
+  }
+
+  .icon-nav-btn svg{
+    width: 20px;
+    height: 20px;
+    stroke: var(--teal);
+  }
+
+  .icon-nav-btn span{
+    font-size: 11px;
+    font-weight: 600;
+  }
+
+  .tip-card{
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    background: rgba(255,255,255,0.6);
+    border-radius: 16px;
+    padding: 14px 16px;
+    margin-top: 26px;
+    max-width: 320px;
+  }
+
+  .tip-icon{
+    font-size: 16px;
+    line-height: 1.6;
+  }
+
+  .tip-text{
+    font-size: 12.5px;
+    color: var(--ink-soft);
+    line-height: 1.8;
+    text-align: right;
+  }
+
+  .history-card{
+    background: #fff;
+    width: 100%;
+    max-width: 360px;
+    border-radius: 22px;
+    padding: 22px;
+    box-shadow: 0 20px 50px -20px rgba(14,58,66,0.5);
+    max-height: 80vh;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .history-card h2{
+    font-size: 18px;
+    margin: 0 0 14px;
+    color: var(--teal-deep);
+  }
+
+  .history-list{
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .history-row{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 11px 4px;
+    border-bottom: 1px solid #EEF6F7;
+    font-size: 14px;
+  }
+
+  .history-row:last-child{
+    border-bottom: none;
+  }
+
+  .history-date{
+    color: var(--ink);
+    font-weight: 500;
+  }
+
+  .history-date.is-today{
+    color: var(--teal);
+    font-weight: 700;
+  }
+
+  .history-count{
+    color: var(--ink-soft);
+    font-weight: 600;
+  }
+
+  .history-empty{
+    font-size: 13.5px;
+    color: var(--ink-soft);
+    text-align: center;
+    padding: 20px 0;
+  }
+
+  .history-close{
+    appearance: none;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    background: var(--teal);
+    color: #fff;
+    font-family: inherit;
+    font-size: 14.5px;
+    font-weight: 600;
+    padding: 12px 0;
+    width: 100%;
+    border-radius: 12px;
+    margin-top: 16px;
+  }
+
+  .report-card{
+    background: #fff;
+    width: 100%;
+    max-width: 380px;
+    border-radius: 22px;
+    padding: 22px;
+    box-shadow: 0 20px 50px -20px rgba(14,58,66,0.5);
+    max-height: 85vh;
+    overflow-y: auto;
+  }
+
+  .report-card h2{
+    font-size: 18px;
+    margin: 0 0 4px;
+    color: var(--teal-deep);
+  }
+
+  .report-section-title{
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--ink-soft);
+    margin: 18px 0 12px;
+  }
+
+  .nav-row{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 6px;
+    margin: 18px 0 12px;
+  }
+
+  .nav-row .report-section-title{
+    margin: 0;
+    flex: 1;
+    text-align: center;
+  }
+
+  .nav-btn{
+    appearance: none;
+    border: none;
+    background: #F3FAFB;
+    color: var(--teal);
+    font-family: inherit;
+    font-size: 11.5px;
+    font-weight: 700;
+    padding: 7px 11px;
+    border-radius: 999px;
+    cursor: pointer;
+    white-space: nowrap;
+  }
+
+  .nav-btn:disabled{
+    opacity: 0.35;
+    cursor: default;
+  }
+
+  .chart-wrap{
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 6px;
+    height: 130px;
+    padding: 0 2px;
+  }
+
+  .bar-col{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-end;
+    flex: 1;
+    height: 100%;
+  }
+
+  .bar-value{
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--teal-deep);
+    margin-bottom: 4px;
+  }
+
+  .bar{
+    width: 20px;
+    min-height: 4px;
+    border-radius: 6px 6px 3px 3px;
+    background: var(--teal);
+  }
+
+  .bar.goal-met{
+    background: #E3A62B;
+  }
+
+  .bar-label{
+    font-size: 10.5px;
+    color: var(--ink-soft);
+    margin-top: 6px;
+  }
+
+  .stat-grid{
+    display: flex;
+    gap: 10px;
+  }
+
+  .stat-box{
+    flex: 1;
+    background: #F3FAFB;
+    border-radius: 14px;
+    padding: 12px 8px;
+    text-align: center;
+  }
+
+  .stat-number{
+    font-size: 20px;
+    font-weight: 800;
+    color: var(--teal-deep);
+  }
+
+  .stat-label{
+    font-size: 11px;
+    color: var(--ink-soft);
+    margin-top: 3px;
+    line-height: 1.4;
+  }
+
+  .streak-banner{
+    background: linear-gradient(135deg, #FFF6DF, #FFEFC2);
+    border-radius: 14px;
+    padding: 12px 14px;
+    text-align: center;
+    font-size: 13.5px;
+    font-weight: 700;
+    color: #8A6510;
+    margin-bottom: 6px;
+  }
+
+  .bar.is-future{
+    background: #E7EFF1;
+  }
+
+  .bar-value.is-future{
+    color: var(--ink-soft);
+    opacity: 0.5;
+  }
+
+  /* --- profile overlay --- */
+  .overlay{
+    position: fixed;
+    inset: 0;
+    background: rgba(14,58,66,0.45);
+    backdrop-filter: blur(2px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 20;
+    padding: 20px;
+  }
+
+  .overlay.hidden{ display: none; }
+
+  .profile-card{
+    background: #fff;
+    width: 100%;
+    max-width: 360px;
+    border-radius: 22px;
+    padding: 26px 22px 22px;
+    box-shadow: 0 20px 50px -20px rgba(14,58,66,0.5);
+  }
+
+  .profile-card h2{
+    font-size: 18px;
+    margin: 0 0 6px;
+    color: var(--teal-deep);
+  }
+
+  .profile-card p{
+    font-size: 13px;
+    color: var(--ink-soft);
+    margin: 0 0 18px;
+    line-height: 1.7;
+  }
+
+  .field{
+    margin-bottom: 14px;
+  }
+
+  .field label{
+    display: block;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--ink);
+    margin-bottom: 6px;
+  }
+
+  .field input, .field select{
+    width: 100%;
+    font-family: inherit;
+    font-size: 15px;
+    padding: 11px 13px;
+    border-radius: 12px;
+    border: 1.5px solid #DCEEF1;
+    background: #F7FCFD;
+    color: var(--ink);
+    outline: none;
+  }
+
+  .field input:focus, .field select:focus{
+    border-color: var(--teal);
+  }
+
+  .field-row{
+    display: flex;
+    gap: 10px;
+  }
+
+  .field-row .field{
+    flex: 1;
+  }
+
+  .toggle-row{
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 13.5px;
+    font-weight: 500;
+    color: var(--ink);
+    cursor: pointer;
+  }
+
+  .toggle-row input{
+    width: 17px;
+    height: 17px;
+    accent-color: var(--teal);
+  }
+
+  .profile-submit{
+    appearance: none;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    background: var(--teal);
+    color: #fff;
+    font-family: inherit;
+    font-size: 15.5px;
+    font-weight: 600;
+    padding: 13px 0;
+    width: 100%;
+    border-radius: 12px;
+    margin-top: 6px;
+  }
+
+  .profile-submit:active{
+    background: var(--teal-deep);
+  }
+
+  .profile-card, .history-card, .report-card{
+    position: relative;
+  }
+
+  .overlay-close{
+    position: absolute;
+    top: 14px;
+    left: 14px;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    border: none;
+    background: #F0F7F8;
+    color: var(--ink-soft);
+    font-size: 16px;
+    line-height: 1;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .screen{
+    width: 100%;
+    max-width: 420px;
+    margin: 0 auto;
+    padding: 28px 24px 56px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .title{
+    font-size: 22px;
+    font-weight: 700;
+    letter-spacing: 0.02em;
+    color: var(--teal-deep);
+    margin: 4px 0 6px;
+  }
+
+  .subtitle{
+    font-size: 14px;
+    color: var(--ink-soft);
+    margin: 0 0 28px;
+  }
+
+  /* --- hero: drinking-glass water vessel --- */
+  .vessel-wrap{
+    position: relative;
+    width: 200px;
+    height: 260px;
+    margin: 16px 0 34px;
+    filter: drop-shadow(0 18px 28px rgba(14,58,66,0.32));
+  }
+
+  .vessel{
+    width: 100%;
+    height: 100%;
+    background: var(--card);
+    position: relative;
+    overflow: hidden;
+    clip-path: polygon(14% 0%, 86% 0%, 76% 100%, 24% 100%);
+  }
+
+  /* glass rim */
+  .vessel-wrap::before{
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 14%;
+    width: 72%;
+    height: 6px;
+    background: rgba(24,154,180,0.28);
+    z-index: 3;
+  }
+
+  /* glass shine streak — slanted to stay parallel to the tapered left wall
+     (the vessel narrows toward the bottom, so a straight vertical bar would
+     drift away from the wall instead of hugging it) */
+  .vessel::after{
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, rgba(255,255,255,0.75), rgba(255,255,255,0.15));
+    clip-path: polygon(19% 4%, 27% 4%, 37% 96%, 29% 96%);
+    z-index: 3;
+    pointer-events: none;
+  }
+
+  .fill{
+    position: absolute;
+    left: -10%;
+    width: 120%;
+    bottom: 0;
+    height: 14%;
+    background: var(--wave);
+    transition: height 700ms cubic-bezier(.22,1,.36,1), background-color 600ms ease;
+  }
+
+  .fill::before, .fill::after{
+    content: "";
+    position: absolute;
+    top: -18px;
+    left: 0;
+    width: 200%;
+    height: 40px;
+    background: radial-gradient(ellipse at center, var(--wave) 45%, transparent 46%);
+    background-size: 60px 40px;
+    background-repeat: repeat-x;
+    animation: drift 3.2s linear infinite;
+    opacity: 0.9;
+  }
+
+  .fill::after{
+    top: -12px;
+    background: radial-gradient(ellipse at center, var(--wave-light) 45%, transparent 46%);
+    background-size: 46px 30px;
+    animation-duration: 4.6s;
+    animation-direction: reverse;
+    opacity: 0.8;
+  }
+
+  @keyframes drift{
+    from{ transform: translateX(0); }
+    to{ transform: translateX(-60px); }
+  }
+
+  .vessel-center{
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    z-index: 2;
+  }
+
+  .readout{
+    background: rgba(255,255,255,0.85);
+    border-radius: 18px;
+    padding: 11px 16px;
+    box-shadow: 0 4px 14px rgba(14,58,66,0.15);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .count{
+    font-size: 40px;
+    font-weight: 800;
+    color: var(--teal-deep);
+    line-height: 1;
+    transition: transform 200ms ease;
+  }
+
+  .count.bump{
+    transform: scale(1.12);
+  }
+
+  .count-label{
+    font-size: 12.5px;
+    color: var(--ink-soft);
+    margin-top: 5px;
+    font-weight: 500;
+  }
+
+  /* --- action button --- */
+  .add-btn{
+    appearance: none;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    background: var(--btn-bg);
+    color: var(--btn-icon);
+    width: 96px;
+    height: 96px;
+    border-radius: 50%;
+    box-shadow: 0 12px 24px -10px rgba(24,154,180,0.55);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 120ms ease, box-shadow 120ms ease, background-color 500ms ease, color 500ms ease;
+  }
+
+  .add-btn:active{
+    transform: scale(0.92);
+    box-shadow: 0 6px 14px -8px rgba(24,154,180,0.55);
+  }
+
+  .add-btn svg{
+    width: 36px;
+    height: 36px;
+  }
+
+  .actions{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+  }
+
+  .minus-btn{
+    appearance: none;
+    cursor: pointer;
+    background: transparent;
+    border: 2px solid var(--teal);
+    color: var(--teal);
+    width: 52px;
+    height: 52px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 120ms ease, opacity 200ms ease, border-color 500ms ease, color 500ms ease;
+  }
+
+  .minus-btn svg{
+    width: 20px;
+    height: 20px;
+  }
+
+  .minus-btn:active{
+    transform: scale(0.9);
+  }
+
+  .minus-btn:disabled{
+    opacity: 0.3;
+    cursor: default;
+  }
+
+  .hint{
+    margin-top: 18px;
+    font-size: 13px;
+    color: var(--ink-soft);
+    text-align: center;
+    opacity: 0.85;
+  }
+</style>
+</head>
+<body>
+
+  <div class="screen">
+    <div class="title">Water</div>
+    <div class="season-badge" id="seasonLabel"></div>
+
+    <div class="vessel-wrap">
+      <div class="vessel">
+        <div class="fill" id="fill"></div>
+        <div class="vessel-center">
+          <div class="readout">
+            <div class="count" id="count">0</div>
+            <div class="count-label">لیوان امروز</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="actions">
+      <button class="add-btn" id="addBtn" aria-label="یک لیوان آب اضافه کن">
+        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M12 5V19M5 12H19" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
+        </svg>
+      </button>
+      <button class="minus-btn" id="minusBtn" aria-label="کم کردن یک لیوان">
+        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M5 12H19" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
+        </svg>
+      </button>
+    </div>
+
+    <div class="goal-hint" id="goalHint"></div>
+
+    <div class="tip-card">
+      <div class="tip-icon">💡</div>
+      <div class="tip-text" id="dailyTip"></div>
+    </div>
+
+    <div class="icon-nav-row">
+      <button class="icon-nav-btn" id="editProfileBtn">
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+        <span>مشخصات</span>
+      </button>
+      <button class="icon-nav-btn" id="historyBtn">
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg>
+        <span>تاریخچه</span>
+      </button>
+      <button class="icon-nav-btn" id="reportBtn">
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 20V10M12 20V4M6 20v-6"/></svg>
+        <span>گزارش</span>
+      </button>
+      <button class="icon-nav-btn" id="reminderBtn">
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
+        <span>یادآوری</span>
+      </button>
+      <button class="icon-nav-btn" id="backupBtn">
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><path d="M7 10l5 5 5-5"/><path d="M12 15V3"/></svg>
+        <span>پشتیبان</span>
+      </button>
+    </div>
+  </div>
+
+  <div class="overlay" id="profileOverlay">
+    <div class="profile-card">
+      <button class="overlay-close" id="profileCloseBtn">✕</button>
+      <h2>بذار هدفتو دقیق‌تر بسازیم</h2>
+      <p>با چندتا مشخصه‌ی ساده، هدف روزانه‌ی آب رو مخصوص خودت و فصل جاری حساب می‌کنیم.</p>
+
+      <div class="field">
+        <label>جنسیت</label>
+        <select id="pGender">
+          <option value="male">مرد</option>
+          <option value="female">زن</option>
+        </select>
+      </div>
+
+      <div class="field-row">
+        <div class="field">
+          <label>سن</label>
+          <input type="number" id="pAge" placeholder="مثلاً ۳۰" min="10" max="100">
+        </div>
+        <div class="field">
+          <label>قد (سانتی‌متر)</label>
+          <input type="number" id="pHeight" placeholder="مثلاً ۱۸۰" min="100" max="230">
+        </div>
+      </div>
+
+      <div class="field">
+        <label>وزن (کیلوگرم)</label>
+        <input type="number" id="pWeight" placeholder="مثلاً ۷۵" min="30" max="200">
+      </div>
+
+      <div class="field">
+        <label>سطح فعالیت بدنی/ورزشی روزانه</label>
+        <select id="pActivity">
+          <option value="low">کم (بیشتر نشسته/کار اداری)</option>
+          <option value="medium" selected>متوسط (ورزش سبک تا متوسط، ۲–۳ بار در هفته)</option>
+          <option value="high">زیاد (ورزش سنگین/روزانه یا فعالیت بدنی زیاد)</option>
+        </select>
+      </div>
+
+      <div class="field">
+        <label class="toggle-row">
+          <input type="checkbox" id="pManualToggle">
+          <span>می‌خوام خودم هدف روزانه رو دستی تعیین کنم</span>
+        </label>
+      </div>
+
+      <div class="field" id="manualGoalField" style="display:none;">
+        <label>هدف روزانه (تعداد لیوان)</label>
+        <input type="number" id="pManualGoal" placeholder="مثلاً ۱۲" min="1" max="30">
+      </div>
+
+      <button class="profile-submit" id="profileSubmitBtn">محاسبه‌ی هدف من</button>
+      <div class="field-error" id="profileError">لطفاً سن، قد و وزن رو درست وارد کن.</div>
+    </div>
+  </div>
+
+  <div class="overlay hidden" id="historyOverlay">
+    <div class="history-card">
+      <button class="overlay-close" id="historyCloseXBtn">✕</button>
+      <h2>تاریخچه‌ی مصرف آب</h2>
+      <div class="history-list" id="historyList"></div>
+      <button class="history-close" id="historyCloseBtn">بستن</button>
+    </div>
+  </div>
+
+  <div class="overlay hidden" id="reportOverlay">
+    <div class="report-card">
+      <button class="overlay-close" id="reportCloseXBtn">✕</button>
+      <h2>گزارش مصرف آب</h2>
+
+      <div class="streak-banner" id="streakBanner"></div>
+
+      <div class="nav-row">
+        <button class="nav-btn" id="weekPrevBtn">هفته‌ی قبل</button>
+        <div class="report-section-title" id="weekTitle">این هفته (شنبه تا جمعه)</div>
+        <button class="nav-btn" id="weekNextBtn">هفته‌ی بعد</button>
+      </div>
+      <div class="chart-wrap" id="weekChart"></div>
+      <div class="stat-grid" id="weekStatGrid">
+        <div class="stat-box">
+          <div class="stat-number" id="weekStatTotal">0</div>
+          <div class="stat-label">مجموع لیوان</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-number" id="weekStatAvg">0</div>
+          <div class="stat-label">میانگین روزانه</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-number" id="weekStatGoalDays">0</div>
+          <div class="stat-label">روزهای رسیدن به هدف</div>
+        </div>
+      </div>
+
+      <div class="nav-row">
+        <button class="nav-btn" id="monthPrevBtn">ماه قبل</button>
+        <div class="report-section-title" id="monthTitle">این ماه</div>
+        <button class="nav-btn" id="monthNextBtn">ماه بعد</button>
+      </div>
+      <div class="stat-grid">
+        <div class="stat-box">
+          <div class="stat-number" id="statTotal">0</div>
+          <div class="stat-label">مجموع لیوان</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-number" id="statAvg">0</div>
+          <div class="stat-label">میانگین روزانه</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-number" id="statGoalDays">0</div>
+          <div class="stat-label">روزهای رسیدن به هدف</div>
+        </div>
+      </div>
+
+      <button class="history-close" id="reportCloseBtn">بستن</button>
+    </div>
+  </div>
+
+  <div class="overlay hidden" id="reminderOverlay">
+    <div class="profile-card">
+      <button class="overlay-close" id="reminderCloseBtn">✕</button>
+      <h2>یادآوری نوشیدن آب</h2>
+      <p>تا وقتی این صفحه توی مرورگرت باز باشه (حتی توی یک تب دیگه)، هر چند وقت یک‌بار یادآوری می‌فرستیم.</p>
+
+      <div class="field">
+        <label class="toggle-row">
+          <input type="checkbox" id="remEnabled">
+          <span>یادآوری فعال باشه</span>
+        </label>
+      </div>
+
+      <div class="field">
+        <label>هر چند وقت یک‌بار</label>
+        <select id="remInterval">
+          <option value="1">هر ۱ ساعت</option>
+          <option value="1.5">هر ۱.۵ ساعت</option>
+          <option value="2">هر ۲ ساعت</option>
+          <option value="3" selected>هر ۳ ساعت</option>
+        </select>
+      </div>
+
+      <div class="field-row">
+        <div class="field">
+          <label>از ساعت</label>
+          <input type="number" id="remStart" min="0" max="23" value="8">
+        </div>
+        <div class="field">
+          <label>تا ساعت</label>
+          <input type="number" id="remEnd" min="0" max="23" value="22">
+        </div>
+      </div>
+
+      <button class="profile-submit" id="reminderSaveBtn">ذخیره</button>
+      <div class="field-error" id="reminderError">برای فعال کردن یادآوری، باید اجازه‌ی نوتیفیکیشن رو در مرورگر بدی.</div>
+    </div>
+  </div>
+
+  <div class="overlay hidden" id="backupOverlay">
+    <div class="profile-card">
+      <button class="overlay-close" id="backupCloseBtn">✕</button>
+      <h2>پشتیبان‌گیری از داده‌ها</h2>
+      <p>یک فایل کوچیک شامل تاریخچه، پروفایل و تنظیماتت می‌سازیم که می‌تونی جای امنی نگهش داری و هر وقت خواستی دوباره برگردونی.</p>
+
+      <button class="profile-submit" id="backupExportBtn">دریافت فایل پشتیبان</button>
+      <button class="profile-submit" id="backupImportBtn" style="background: transparent; color: var(--teal); border: 1.5px solid var(--teal); margin-top: 10px;">بازیابی از فایل پشتیبان</button>
+      <input type="file" id="backupFileInput" accept="application/json,.json" style="display:none">
+
+      <div class="field-error" id="backupError">فایل انتخاب‌شده معتبر نیست.</div>
+      <div class="field-error" id="backupSuccess" style="color: var(--teal-deep);">بازیابی با موفقیت انجام شد.</div>
+
+      <div style="border-top: 1px solid #EEF6F7; margin: 18px 0 14px;"></div>
+      <p style="margin-bottom: 10px;">اگه می‌خوای کاملاً از نو شروع کنی (همه‌چیز پاک بشه: تاریخچه، پروفایل، تنظیمات، و نسخه‌ی ذخیره‌شده‌ی خود اپ):</p>
+      <button class="profile-submit" id="resetAppBtn" style="background: #C4453B;">شروع از نو (پاک کردن همه‌چیز)</button>
+    </div>
+  </div>
+
+<script>
+  // seasonal themes: only the background shifts with the season now.
+  // the water/button color is handled separately by progress toward the goal.
+  const SEASONS = {
+    spring: { name: 'بهار',    bgTop: '#EAF7EA', bgBottom: '#FCE9F1', goal: 8  },
+    summer: { name: 'تابستان', bgTop: '#FFF1C2', bgBottom: '#8FE0E8', goal: 10 },
+    autumn: { name: 'پاییز',   bgTop: '#FBF1E4', bgBottom: '#F6DFC2', goal: 7  },
+    winter: { name: 'زمستان',  bgTop: '#EAF1F8', bgBottom: '#AFCBE3', goal: 6  }
+  };
+
+  function getSeasonKey(date = new Date()){
+    // exact, not approximate: Persian seasons follow the Jalali month exactly
+    // (Farvardin-Khordad = spring, Tir-Shahrivar = summer, Mehr-Azar = autumn,
+    // Dey-Esfand = winter), not Gregorian month boundaries which drift ~20 days off.
+    const [, jm] = toJalaali(date.getFullYear(), date.getMonth() + 1, date.getDate());
+    if (jm >= 1 && jm <= 3)  return 'spring';
+    if (jm >= 4 && jm <= 6)  return 'summer';
+    if (jm >= 7 && jm <= 9)  return 'autumn';
+    return 'winter';
+  }
+
+  function applySeasonTheme(){
+    const s = SEASONS[getSeasonKey()];
+    const root = document.documentElement.style;
+    root.setProperty('--bg-top', s.bgTop);
+    root.setProperty('--bg-bottom', s.bgBottom);
+    document.getElementById('seasonLabel').textContent = 'فصل ' + s.name;
+  }
+
+  applySeasonTheme();
+
+  // --- daily health tip ---
+  // one general/seasonal tip per day, picked deterministically from the date
+  // so it's stable all day and changes tomorrow — general wellness info, not
+  // medical advice.
+  const HEALTH_TIPS = {
+    general: [
+      'یک لیوان آب بلافاصله بعد از بیدار شدن، به بدنت کمک می‌کنه بعد از ساعت‌ها بی‌آبی شبانه دوباره آب‌رسانی بشه.',
+      'رنگ ادرارت رو نگاه کن: هر چی روشن‌تر باشه، معمولاً یعنی آب بدنت کافیه.',
+      'گاهی احساس گرسنگی در واقع نشونه‌ی تشنگیه؛ قبل از میان‌وعده، یک لیوان آب رو امتحان کن.',
+      'نوشیدن آب قبل از غذا می‌تونه به هضم بهتر کمک کنه.',
+      'میوه و سبزیجاتی مثل هندوانه، خیار و پرتقال هم بخش قابل‌توجهی از آب روزانه‌ت رو تأمین می‌کنن.',
+      'سوپ و آبگوشت هم جزو مایعات روزانه حساب می‌شن، نه فقط آب خالص.',
+      'یک بطری آب همیشه در دید خودت نگه دار؛ دیدنش خودش یادآوریه.',
+      'کم‌آبی بدن می‌تونه باعث احساس خستگی و افت تمرکز بشه، حتی قبل از احساس تشنگی.',
+      'در طول ورزش، هر ۱۵ تا ۲۰ دقیقه چند جرعه آب بنوش، نه فقط قبل و بعدش.',
+      'چای و قهوه هم در تأمین مایعات روزانه نقش دارن، هرچند بهتره پرمصرفشون نکنی.',
+      'اگه لب‌ها یا پوستت خشک شده، ممکنه نشونه‌ی نیاز بدنت به آب بیشتر باشه.',
+      'یک لیوان آب قبل از خواب (نه خیلی زیاد) می‌تونه به شادابی صبح روز بعد کمک کنه.',
+      'سردرد گاهی یکی از اولین نشونه‌های کم‌آبی بدنه.',
+      'سفر و مخصوصاً پرواز، بدن رو سریع‌تر دچار کم‌آبی می‌کنه؛ بیشتر آب بنوش.',
+      'اگه مزه‌ی آب خالص برات جذاب نیست، چند برگ نعنا یا یک تکه لیمو بهش اضافه کن.',
+      'عادت نوشیدن آب رو به یکی از کارهای روزمره‌ت گره بزن؛ مثلاً بعد از هر بار چک‌کردن گوشی.',
+      'در محیط‌های دارای کولر یا بخاری، رطوبت هوا کمتره و بدن سریع‌تر آب از دست می‌ده.',
+      'سر کشیدن چند لیوان کوچیک در طول روز، معمولاً راحت‌تر از نوشیدن یک لیوان خیلی بزرگه.',
+      'لازم نیست منتظر بمونی تا تشنه بشی؛ نوشیدن آب قبل از احساس تشنگی عادت بهتریه.',
+      'آب با دمای اتاق، برای خیلی‌ها راحت‌تر از آب خیلی یخ هضم می‌شه.',
+      'اگه حواست از نوشیدن آب پرت می‌شه، یک یادآور ساعتی روی گوشیت بذار.',
+      'مصرف زیاد نمک، نیاز بدن به آب رو بیشتر می‌کنه.',
+      'بعد از تب یا اسهال، بدن آب بیشتری از دست می‌ده و باید جبران بشه.',
+      'پخش‌کردن آب در طول روز، مؤثرتر از نوشیدن حجم زیاد در یک نشست تنهاست.',
+      'لباس‌های تیره و ضخیم در هوای گرم، تعریق و از دست رفتن آب بدن رو بیشتر می‌کنن.',
+      'شیر و نوشیدنی‌های لبنی هم بخشی از مایعات روزانه‌ت حساب می‌شن.',
+      'بعضی داروها (مثل مدرها) باعث از دست رفتن آب بیشتر بدن می‌شن؛ در این شرایط به آب بیشتری نیاز داری.',
+      'حتی کم‌آبی خفیف می‌تونه روی خلق‌وخو و حس‌وحال روزانه‌ت اثر بذاره.',
+      'یک لیوان آب قبل از دوش گرم، به تنظیم دمای بدنت کمک می‌کنه.',
+      'نوشیدن یک لیوان آب قبل از رانندگی‌های طولانی، به هوشیاریت کمک می‌کنه.',
+      'بچه‌ها و سالمندان معمولاً دیرتر متوجه تشنگی خودشون می‌شن؛ اگه مسئولشونی، یادآوری کن.',
+      'غذاهای پرچرب و سنگین، هضمشون به آب بیشتری نیاز داره.',
+      'نوشیدن آب هنگام مطالعه یا کار ذهنی سنگین، می‌تونه به حفظ تمرکز کمک کنه.',
+      'اگه صبح‌ها احساس گیجی یا خستگی داری، امتحان کن اول یک لیوان آب بخوری، شاید فقط کم‌آب باشی.',
+      'غذاهای پرفیبر مثل جو و حبوبات، برای هضم درست به آب کافی نیاز دارن.',
+      'استفاده از یک اپلیکیشن یا دفترچه برای پیگیری مصرف آب، عادت رو پایدارتر می‌کنه.',
+      'آب گازدار بدون شکر هم می‌تونه جایگزین سالمی برای نوشیدنی‌های شیرین باشه.',
+      'بعد از مصرف الکل یا کافئین زیاد، بدن آب بیشتری از دست می‌ده و نیاز به جبران داره.',
+      'نگه‌داشتن یک لیوان آب کنار تخت، اولین کاری که صبح انجام می‌دی رو آسون‌تر می‌کنه.'
+    ],
+    spring: [
+      'بهار با هوای معتدلش، بهترین فرصت برای شکل‌دادن یه عادت پایدار نوشیدن آبه.',
+      'حساسیت‌های فصلی بهاره می‌تونن مخاط بدن رو خشک کنن؛ آب کافی به این کمک می‌کنه.',
+      'پیاده‌روی‌های بهاری رو با یک بطری آب همراه کن.',
+      'گرده‌افشانی بهاره گاهی گلو رو خشک می‌کنه؛ جرعه‌جرعه آب نوشیدن کمک‌کننده‌ست.',
+      'هوای معتدل بهار باعث می‌شه بعضی‌ها فراموش کنن که همچنان به آب کافی نیاز دارن.',
+      'گردش و پیک‌نیک‌های بهاری، بهترین فرصت برای همراه‌داشتن یک بطری آبه.',
+      'در بهار با شروع فصل ورزش‌های بیرونی، بدنت به هماهنگ‌شدن دوباره با نیاز بیشتر به آب زمان لازم داره.',
+      'تعویض لباس‌های زمستونی به بهاری، وقت خوبیه که یک بطری آب همیشگی هم به وسایل روزمره‌ت اضافه کنی.',
+      'هوای بهاری گاهی خیلی سریع از خنک به گرم تغییر می‌کنه؛ به همین اندازه نیاز بدنت به آب هم تغییر می‌کنه.'
+    ],
+    summer: [
+      'در گرمای تابستون، بدن از طریق تعریق آب بیشتری از دست می‌ده؛ نیازت به آب بالاتر می‌ره.',
+      'در ساعات گرم روز سعی کن مستقیم زیر آفتاب نمونی، و آب بیشتری بنوش.',
+      'بعد از فعالیت سنگین در گرما، فقط آب کافی نیست؛ کمی نمک و املاح (مثلاً از میوه یا غذا) هم لازمه.',
+      'هندوانه و خیار در تابستون هم خنک‌کننده‌ن و هم پرآب.',
+      'عرق زیاد و مداوم می‌تونه نشونه‌ی هشدار کم‌آبی باشه؛ جدی بگیرش.',
+      'نوشیدنی‌های خیلی شیرین و سرد تابستونی، جای آب واقعی رو نمی‌گیرن.',
+      'توی استخر یا دریا چون گرما رو کمتر حس می‌کنی ممکنه یادت بره آب بنوشی؛ ولی بدنت هنوز کم‌آب می‌شه.',
+      'سفرهای تابستونی و ماشین گرم می‌تونن باعث کم‌آبی سریع‌تر بشن؛ همیشه آب همراه داشته باش.',
+      'در تابستون، صبح زود یا عصر بهترین زمان برای فعالیت بدنیه؛ باز هم آب رو فراموش نکن.',
+      'کرم ضدآفتاب کمک می‌کنه از سوختگی جلوگیری بشه، ولی جایگزین نوشیدن آب کافی نیست.'
+    ],
+    autumn: [
+      'با کم‌شدن گرما در پاییز، ممکنه کمتر احساس تشنگی کنی؛ ولی نیاز بدن به آب همچنان مهمه.',
+      'هوای پاییزی خشک‌تر می‌شه و همین می‌تونه پوست رو خشک کنه؛ آب کافی کمک می‌کنه.',
+      'با شروع مدرسه یا کار پاییزی، برنامه‌ی نوشیدن آب رو هم مثل بقیه‌ی عادت‌هات زمان‌بندی کن.',
+      'چای‌های گیاهی گرم پاییزی هم می‌تونن بخشی از مایعات روزانه‌ت باشن.',
+      'تغییر هوا در پاییز می‌تونه حس تشنگی رو کمتر از واقعیت نشون بده.',
+      'یک لیوان آب گرم صبح پاییزی، شروع خوبی برای روز و برای هیدراته‌موندنه.',
+      'برداشت محصولات پاییزی مثل انار و سیب، هم خوشمزه‌ن و هم به آب بدنت کمک می‌کنن.',
+      'با سردترشدن هوای پاییز، بعضی‌ها آب سرد رو کنار می‌ذارن؛ آب ولرم می‌تونه جایگزین خوبی باشه.',
+      'تغییر ساعت و کوتاه‌شدن روزها در پاییز، می‌تونه روی روتین روزانه از جمله نوشیدن آب اثر بذاره.'
+    ],
+    winter: [
+      'در زمستون، حس تشنگی طبیعی بدن ضعیف‌تر می‌شه؛ یعنی باید آگاهانه‌تر آب بنوشی.',
+      'بخاری و شوفاژ هوای خونه رو خشک می‌کنن و باعث از دست رفتن آب بیشتر بدن می‌شن.',
+      'نوشیدن آب ولرم در هوای سرد می‌تونه گزینه‌ی راحت‌تری نسبت به آب خیلی سرد باشه.',
+      'سوپ‌های داغ زمستونی هم جزو مایعات روزانه‌ت حساب می‌شن.',
+      'حتی وقتی هوا سرده و عرق نمی‌کنی، بدنت هنوز به آب نیاز داره.',
+      'در سفرهای زمستونی و برف‌بازی، با اینکه هوا سرده، بدن هنوز عرق می‌کنه و به آب نیاز داره.',
+      'زمستون فصل خوبیه برای امتحان‌کردن دم‌نوش‌های گیاهی گرم به‌عنوان بخشی از مایعات روزانه.',
+      'پوشیدن لباس‌های زیاد و گرم می‌تونه باعث تعریق مخفی بشه، حتی وقتی هوا سرده.',
+      'بعد از فعالیت‌های زمستونی مثل پارو زدن برف، حتماً آب بدنت رو جبران کن.'
+    ]
+  };
+
+  function simpleHash(str){
+    let h = 0;
+    for (let i = 0; i < str.length; i += 1){
+      h = (h * 31 + str.charCodeAt(i)) >>> 0;
+    }
+    return h;
+  }
+
+  function renderDailyTip(){
+    const pool = HEALTH_TIPS.general.concat(HEALTH_TIPS[getSeasonKey()] || []);
+    const idx = simpleHash(todayKey()) % pool.length;
+    document.getElementById('dailyTip').textContent = pool[idx];
+  }
+
+  renderDailyTip();
+
+  // --- persistence: profile, manual goal, and per-day glass counts ---
+  const STORAGE_KEY = 'water_app_state_v1';
+
+  function todayKey(d = new Date()){
+    const y = d.getFullYear();
+    const m = String(d.getMonth() + 1).padStart(2, '0');
+    const day = String(d.getDate()).padStart(2, '0');
+    return `${y}-${m}-${day}`;
+  }
+
+  const DEFAULT_REMINDER = { enabled: false, intervalHours: 3, startHour: 8, endHour: 22 };
+
+  function loadState(){
+    try{
+      const raw = localStorage.getItem(STORAGE_KEY);
+      if (!raw) return { profile: null, manualGoal: null, history: {}, reminder: { ...DEFAULT_REMINDER }, lastReminderAt: null };
+      const parsed = JSON.parse(raw);
+      return {
+        profile: sanitizeProfile(parsed.profile),
+        manualGoal: (typeof parsed.manualGoal === 'number') ? parsed.manualGoal : null,
+        history: (parsed.history && typeof parsed.history === 'object') ? parsed.history : {},
+        reminder: { ...DEFAULT_REMINDER, ...(parsed.reminder || {}) },
+        lastReminderAt: (typeof parsed.lastReminderAt === 'number') ? parsed.lastReminderAt : null
+      };
+    } catch (e){
+      return { profile: null, manualGoal: null, history: {}, reminder: { ...DEFAULT_REMINDER }, lastReminderAt: null };
+    }
+  }
+
+  // guards against a corrupted or manually-edited localStorage value producing
+  // NaN goals or crashing computeGoalGlasses downstream
+  function sanitizeProfile(p){
+    if (!p || typeof p !== 'object') return null;
+    const genderOk = p.gender === 'male' || p.gender === 'female';
+    const activityOk = p.activity === 'low' || p.activity === 'medium' || p.activity === 'high';
+    const ageOk = typeof p.age === 'number' && p.age >= 10 && p.age <= 100;
+    const heightOk = typeof p.height === 'number' && p.height >= 100 && p.height <= 230;
+    const weightOk = typeof p.weight === 'number' && p.weight >= 30 && p.weight <= 200;
+    if (!(genderOk && activityOk && ageOk && heightOk && weightOk)) return null;
+    return { gender: p.gender, age: p.age, height: p.height, weight: p.weight, activity: p.activity };
+  }
+
+  function saveState(){
+    try{
+      localStorage.setItem(STORAGE_KEY, JSON.stringify({ profile, manualGoal, history, reminder, lastReminderAt }));
+    } catch (e){
+      // storage unavailable (e.g. private browsing) — app still works for this session
+    }
+  }
+
+  // history entries store { count, goal } so historical days are judged against
+  // the goal that was actually active that day, not today's goal. Older entries
+  // saved before this change are plain numbers — these helpers read either shape.
+  function getEntryCount(dateKey){
+    const v = history[dateKey];
+    if (v === undefined) return undefined;
+    return (typeof v === 'object') ? v.count : v;
+  }
+  function getEntryGoal(dateKey, fallbackGoal){
+    const v = history[dateKey];
+    if (v && typeof v === 'object' && typeof v.goal === 'number') return v.goal;
+    return fallbackGoal;
+  }
+
+  // --- personalized goal calculation ---
+  // general estimate only, not personalized medical advice:
+  // base ml/kg by gender, plus an activity add-on, adjusted by a seasonal factor
+  const savedState = loadState();
+  let profile = savedState.profile;       // { gender, age, height, weight, activity } | null
+  let manualGoal = savedState.manualGoal; // number | null
+  let history = savedState.history;       // { "YYYY-MM-DD": { count, goal } }
+  let reminder = savedState.reminder;     // { enabled, intervalHours, startHour, endHour }
+  let lastReminderAt = savedState.lastReminderAt; // timestamp (ms) | null
+
+  const ML_PER_KG = { male: 35, female: 31 };
+  const ACTIVITY_ADD_ML = { low: 0, medium: 350, high: 700 };
+  const SEASON_FACTOR = { spring: 1.0, summer: 1.15, autumn: 0.95, winter: 0.85 };
+  const GLASS_ML = 250;
+
+  // lower ml/kg baseline with age: thirst sensation and per-kg turnover both
+  // decline somewhat later in life, mirrored by common hydration-calculator tiers
+  function ageMultiplier(age){
+    if (age <= 55) return 1;
+    if (age <= 65) return 30 / 35;
+    return 25 / 35;
+  }
+
+  function computeGoalGlasses(p, seasonKey){
+    let mlPerKg = ML_PER_KG[p.gender] * ageMultiplier(p.age);
+
+    // BMI-based adjustment: higher body-fat percentage holds less water per kg,
+    // so cap the ml/kg baseline for BMI in the obesity range
+    const heightM = p.height / 100;
+    const bmi = p.weight / (heightM * heightM);
+    if (bmi >= 30){
+      mlPerKg = Math.min(mlPerKg, 25);
+    }
+
+    const base = p.weight * mlPerKg;
+    const withActivity = base + ACTIVITY_ADD_ML[p.activity];
+    const withSeason = withActivity * SEASON_FACTOR[seasonKey];
+    return Math.max(4, Math.round(withSeason / GLASS_ML));
+  }
+
+  function refreshGoalDisplay(){
+    const glasses = getCurrentGoal();
+    if (count >= glasses){
+      document.getElementById('goalHint').textContent = '🎉 به هدف امروزت رسیدی!';
+    } else {
+      document.getElementById('goalHint').textContent = 'هدف امروزت: ' + glasses + ' لیوان';
+    }
+  }
+
+  function getCurrentGoal(){
+    if (manualGoal !== null) return manualGoal;
+    const seasonKey = getSeasonKey();
+    return profile ? computeGoalGlasses(profile, seasonKey) : SEASONS[seasonKey].goal;
+  }
+
+  // --- progress-based coloring: water deepens into a richer blue as it fills;
+  // the "+" button turns gold only once the goal is reached (water stays blue) ---
+  const WATER_LIGHT = { wave: '#6FD6E8', waveLight: '#BFEFF2' };
+  const WATER_DEEP  = { wave: '#0B7397', waveLight: '#4FADCB' };
+  const BTN_NORMAL = '#189AB4';
+  const BTN_GOAL   = '#FFD700';
+
+  function hexToRgb(hex){
+    const v = parseInt(hex.slice(1), 16);
+    return { r: (v >> 16) & 255, g: (v >> 8) & 255, b: v & 255 };
+  }
+  function rgbToHex(r, g, b){
+    return '#' + [r, g, b].map(x => Math.round(x).toString(16).padStart(2, '0')).join('');
+  }
+  function lerpColor(hexA, hexB, t){
+    const a = hexToRgb(hexA), b = hexToRgb(hexB);
+    return rgbToHex(a.r + (b.r - a.r) * t, a.g + (b.g - a.g) * t, a.b + (b.b - a.b) * t);
+  }
+
+  function updateProgressColors(){
+    const goal = getCurrentGoal();
+    const ratio = goal > 0 ? Math.min(count / goal, 1) : 0;
+    const root = document.documentElement.style;
+    root.setProperty('--wave', lerpColor(WATER_LIGHT.wave, WATER_DEEP.wave, ratio));
+    root.setProperty('--wave-light', lerpColor(WATER_LIGHT.waveLight, WATER_DEEP.waveLight, ratio));
+    root.setProperty('--btn-bg', ratio >= 1 ? BTN_GOAL : BTN_NORMAL);
+    root.setProperty('--btn-icon', ratio >= 1 ? '#5C4400' : '#FFFFFF');
+  }
+
+  let count = 0;
+  const countEl = document.getElementById('count');
+  const fillEl = document.getElementById('fill');
+  const btn = document.getElementById('addBtn');
+  const minusBtn = document.getElementById('minusBtn');
+
+  count = getEntryCount(todayKey()) || 0;
+
+  // record today explicitly (even at 0) so opened-but-unlogged days are counted
+  // correctly in weekly/monthly averages, instead of being silently absent
+  if (!(todayKey() in history)){
+    history[todayKey()] = { count: 0, goal: getCurrentGoal() };
+    saveState();
+  }
+  countEl.textContent = count;
+
+  refreshGoalDisplay();
+  updateProgressColors();
+
+  const profileOverlay = document.getElementById('profileOverlay');
+  const profileError = document.getElementById('profileError');
+
+  // skip onboarding if we already have a saved profile or manual goal
+  if (profile || manualGoal !== null){
+    profileOverlay.classList.add('hidden');
+  }
+
+  document.getElementById('pManualToggle').addEventListener('change', (e) => {
+    document.getElementById('manualGoalField').style.display = e.target.checked ? 'block' : 'none';
+  });
+
+  document.getElementById('editProfileBtn').addEventListener('click', () => {
+    if (profile){
+      document.getElementById('pGender').value = profile.gender;
+      document.getElementById('pAge').value = profile.age;
+      document.getElementById('pHeight').value = profile.height;
+      document.getElementById('pWeight').value = profile.weight;
+      document.getElementById('pActivity').value = profile.activity;
+    }
+    const manualToggle = document.getElementById('pManualToggle');
+    manualToggle.checked = manualGoal !== null;
+    document.getElementById('manualGoalField').style.display = manualToggle.checked ? 'block' : 'none';
+    document.getElementById('pManualGoal').value = manualGoal !== null ? manualGoal : '';
+    profileOverlay.classList.remove('hidden');
+  });
+
+  document.getElementById('profileSubmitBtn').addEventListener('click', () => {
+    const gender = document.getElementById('pGender').value;
+    const age = parseInt(document.getElementById('pAge').value, 10);
+    const height = parseInt(document.getElementById('pHeight').value, 10);
+    const weight = parseFloat(document.getElementById('pWeight').value);
+    const activity = document.getElementById('pActivity').value;
+
+    const manualChecked = document.getElementById('pManualToggle').checked;
+    const manualVal = parseInt(document.getElementById('pManualGoal').value, 10);
+
+    if (manualChecked){
+      const manualValid = manualVal >= 1 && manualVal <= 30;
+      if (!manualValid){
+        profileError.textContent = 'لطفاً یک عدد معتبر بین ۱ تا ۳۰ برای هدف دستی وارد کن.';
+        profileError.style.display = 'block';
+        return;
+      }
+    } else {
+      const valid = age >= 10 && age <= 100 && height >= 100 && height <= 230 && weight >= 30 && weight <= 200;
+      if (!valid){
+        profileError.textContent = 'لطفاً سن، قد و وزن رو درست وارد کن.';
+        profileError.style.display = 'block';
+        return;
+      }
+    }
+    profileError.style.display = 'none';
+
+    // save body-metric profile whenever valid values are present, even in manual mode
+    const metricsValid = age >= 10 && age <= 100 && height >= 100 && height <= 230 && weight >= 30 && weight <= 200;
+    if (metricsValid){
+      profile = { gender, age, height, weight, activity };
+    }
+
+    manualGoal = manualChecked ? manualVal : null;
+
+    // keep today's stored goal in sync immediately, so a profile/goal edit
+    // doesn't leave today's history entry pointing at a stale goal until
+    // the next glass is logged
+    if (todayKey() in history){
+      history[todayKey()] = { count: getEntryCount(todayKey()) || 0, goal: getCurrentGoal() };
+    }
+
+    saveState();
+    refreshGoalDisplay();
+    updateProgressColors();
+    updateFill();
+    profileOverlay.classList.add('hidden');
+  });
+
+  // fill is proportional to progress toward the current goal, so the glass
+  // reads exactly full once the goal's glass-count is reached
+  function updateFill(){
+    const goal = getCurrentGoal();
+    const pct = goal > 0 ? Math.min(100, (count / goal) * 100) : 0;
+    fillEl.style.height = pct + '%';
+  }
+
+  function updateMinusState(){
+    minusBtn.disabled = count <= 0;
+  }
+
+  function bumpCount(){
+    countEl.classList.remove('bump');
+    void countEl.offsetWidth; // restart animation
+    countEl.classList.add('bump');
+    setTimeout(() => countEl.classList.remove('bump'), 200);
+  }
+
+  function commitCountChange(){
+    countEl.textContent = count;
+    history[todayKey()] = { count, goal: getCurrentGoal() };
+    saveState();
+    updateFill();
+    refreshGoalDisplay();
+    updateProgressColors();
+    updateMinusState();
+    bumpCount();
+  }
+
+  btn.addEventListener('click', () => {
+    count += 1;
+    commitCountChange();
+  });
+
+  minusBtn.addEventListener('click', () => {
+    if (count <= 0) return;
+    count -= 1;
+    commitCountChange();
+  });
+
+  updateMinusState();
+  updateFill();
+
+  // --- history view ---
+  const historyOverlay = document.getElementById('historyOverlay');
+  const historyList = document.getElementById('historyList');
+  let todayStr = todayKey();
+
+  function renderHistory(){
+    const dates = Object.keys(history).sort((a, b) => b.localeCompare(a));
+    historyList.innerHTML = '';
+
+    if (dates.length === 0){
+      const empty = document.createElement('div');
+      empty.className = 'history-empty';
+      empty.textContent = 'هنوز هیچ روزی ثبت نشده.';
+      historyList.appendChild(empty);
+      return;
+    }
+
+    for (const date of dates){
+      const isToday = date === todayStr;
+
+      const row = document.createElement('div');
+      row.className = 'history-row';
+
+      const dateSpan = document.createElement('span');
+      dateSpan.className = 'history-date' + (isToday ? ' is-today' : '');
+      dateSpan.textContent = isToday ? 'امروز — ' + formatJalali(date) : formatJalali(date);
+
+      const countSpan = document.createElement('span');
+      countSpan.className = 'history-count';
+      countSpan.textContent = getEntryCount(date) + ' لیوان';
+
+      row.appendChild(dateSpan);
+      row.appendChild(countSpan);
+      historyList.appendChild(row);
+    }
+  }
+
+  document.getElementById('historyBtn').addEventListener('click', () => {
+    renderHistory();
+    historyOverlay.classList.remove('hidden');
+  });
+
+  document.getElementById('historyCloseBtn').addEventListener('click', () => {
+    historyOverlay.classList.add('hidden');
+  });
+
+  // --- Jalali (Persian solar) calendar conversion ---
+  // standard public-domain algorithm (jalaali-js), used so "this month" and
+  // displayed dates match the Persian calendar instead of the Gregorian one
+  function jDiv(a, b){ return ~~(a / b); }
+  function jMod(a, b){ return a - ~~(a / b) * b; }
+
+  function jalCal(jy){
+    const breaks = [-61, 9, 38, 199, 426, 686, 756, 818, 1111, 1181, 1210,
+      1635, 2060, 2097, 2192, 2262, 2324, 2394, 2456, 3178];
+    const bl = breaks.length;
+    const gy = jy + 621;
+    let leapJ = -14;
+    let jp = breaks[0];
+    let jm, jump, n, i;
+
+    for (i = 1; i < bl; i += 1){
+      jm = breaks[i];
+      jump = jm - jp;
+      if (jy < jm) break;
+      leapJ = leapJ + jDiv(jump, 33) * 8 + jDiv(jMod(jump, 33), 4);
+      jp = jm;
+    }
+    n = jy - jp;
+    leapJ = leapJ + jDiv(n, 33) * 8 + jDiv(jMod(n, 33) + 3, 4);
+    if (jMod(jump, 33) === 4 && jump - n === 4) leapJ += 1;
+
+    const leapG = jDiv(gy, 4) - jDiv((jDiv(gy, 100) + 1) * 3, 4) - 150;
+    const march = 20 + leapJ - leapG;
+
+    let leap = jMod(jMod(n + 1, 33) - 1, 4);
+    if (leap === -1) leap = 4;
+
+    return { leap, gy, march };
+  }
+
+  function g2d(gy, gm, gd){
+    let d = jDiv((gy + jDiv(gm - 8, 6) + 100100) * 1461, 4) +
+      jDiv(153 * jMod(gm + 9, 12) + 2, 5) + gd - 34840408;
+    d = d - jDiv(jDiv(gy + 100100 + jDiv(gm - 8, 6), 100) * 3, 4) + 752;
+    return d;
+  }
+
+  function d2g(jdn){
+    let j = 4 * jdn + 139361631;
+    j = j + jDiv(jDiv(4 * jdn + 183187720, 146097) * 3, 4) * 4 - 3908;
+    const i = jDiv(jMod(j, 1461), 4) * 5 + 308;
+    const gd = jDiv(jMod(i, 153), 5) + 1;
+    const gm = jMod(jDiv(i, 153), 12) + 1;
+    const gy = jDiv(j, 1461) - 100100 + jDiv(8 - gm, 6);
+    return [gy, gm, gd];
+  }
+
+  function d2j(jdn){
+    let gy = d2g(jdn)[0];
+    let jy = gy - 621;
+    const r = jalCal(jy);
+    const jdn1f = g2d(r.gy, 3, r.march);
+    let k = jdn - jdn1f;
+    let jm, jd;
+
+    if (k >= 0){
+      if (k <= 185){
+        jm = 1 + jDiv(k, 31);
+        jd = jMod(k, 31) + 1;
+        return [jy, jm, jd];
+      }
+      k -= 186;
+    } else {
+      jy -= 1;
+      k += 179;
+      if (r.leap === 1) k += 1;
+    }
+    jm = 7 + jDiv(k, 30);
+    jd = jMod(k, 30) + 1;
+    return [jy, jm, jd];
+  }
+
+  function toJalaali(gy, gm, gd){
+    return d2j(g2d(gy, gm, gd));
+  }
+
+  const PERSIAN_MONTH_NAMES = ['فروردین', 'اردیبهشت', 'خرداد', 'تیر', 'مرداد', 'شهریور',
+    'مهر', 'آبان', 'آذر', 'دی', 'بهمن', 'اسفند'];
+
+  function formatJalali(dateKey){
+    const [gy, gm, gd] = dateKey.split('-').map(Number);
+    const [jy, jm, jd] = toJalaali(gy, gm, gd);
+    return jd + ' ' + PERSIAN_MONTH_NAMES[jm - 1] + ' ' + jy;
+  }
+
+  function formatJalaliShort(dateKey){
+    const [gy, gm, gd] = dateKey.split('-').map(Number);
+    const [, jm, jd] = toJalaali(gy, gm, gd);
+    return jd + ' ' + PERSIAN_MONTH_NAMES[jm - 1];
+  }
+
+  function shiftJalaliMonth(jy, jm, offset){
+    const idx = (jm - 1) + offset;
+    const yearShift = Math.floor(idx / 12);
+    const newMonthIdx = ((idx % 12) + 12) % 12;
+    return [jy + yearShift, newMonthIdx + 1];
+  }
+
+  // --- weekly chart + weekly/monthly report + streak ---
+  const reportOverlay = document.getElementById('reportOverlay');
+  const weekChartEl = document.getElementById('weekChart');
+  const monthTitleEl = document.getElementById('monthTitle');
+  const statTotalEl = document.getElementById('statTotal');
+  const statAvgEl = document.getElementById('statAvg');
+  const statGoalDaysEl = document.getElementById('statGoalDays');
+  const streakBannerEl = document.getElementById('streakBanner');
+
+  const PERSIAN_DAY_SHORT = { 0: 'ی', 1: 'د', 2: 'س', 3: 'چ', 4: 'پ', 5: 'ج', 6: 'ش' };
+
+  // Persian weeks run Saturday -> Friday, so find this week's Saturday first.
+  // offset shifts by whole weeks: 0 = this week, -1 = last week, etc.
+  function getWeekDateKeys(offset){
+    const today = new Date();
+    const daysSinceSaturday = (today.getDay() - 6 + 7) % 7; // JS: 0=Sun ... 6=Sat
+    const saturday = new Date(today);
+    saturday.setDate(today.getDate() - daysSinceSaturday + offset * 7);
+
+    const keys = [];
+    for (let i = 0; i < 7; i += 1){
+      const d = new Date(saturday);
+      d.setDate(saturday.getDate() + i);
+      keys.push(todayKey(d));
+    }
+    return keys;
+  }
+
+  let weekOffset = 0;
+  let monthOffset = 0;
+
+  function renderWeekChart(){
+    const dates = getWeekDateKeys(weekOffset);
+    const goal = getCurrentGoal();
+    const maxVal = Math.max(goal, ...dates.map(d => getEntryCount(d) || 0), 1);
+
+    document.getElementById('weekTitle').textContent =
+      (weekOffset === 0 ? 'این هفته: ' : '') +
+      formatJalaliShort(dates[0]) + ' تا ' + formatJalaliShort(dates[6]);
+
+    weekChartEl.innerHTML = '';
+    for (const d of dates){
+      const isFuture = weekOffset === 0 && d > todayStr;
+      const val = getEntryCount(d) || 0;
+      const dayGoal = getEntryGoal(d, goal);
+      const pct = isFuture ? 4 : Math.max(4, Math.round((val / maxVal) * 100));
+      const dow = new Date(d + 'T00:00:00').getDay();
+      const goalMet = !isFuture && val >= dayGoal && val > 0;
+
+      const col = document.createElement('div');
+      col.className = 'bar-col';
+
+      const valueDiv = document.createElement('div');
+      valueDiv.className = 'bar-value' + (isFuture ? ' is-future' : '');
+      valueDiv.textContent = isFuture ? '–' : val;
+
+      const barDiv = document.createElement('div');
+      barDiv.className = 'bar' + (goalMet ? ' goal-met' : '') + (isFuture ? ' is-future' : '');
+      barDiv.style.height = pct + '%';
+
+      const labelDiv = document.createElement('div');
+      labelDiv.className = 'bar-label';
+      labelDiv.textContent = PERSIAN_DAY_SHORT[dow];
+
+      col.appendChild(valueDiv);
+      col.appendChild(barDiv);
+      col.appendChild(labelDiv);
+      weekChartEl.appendChild(col);
+    }
+
+    document.getElementById('weekNextBtn').disabled = weekOffset >= 0;
+  }
+
+  function renderWeekStats(){
+    const goal = getCurrentGoal();
+    const weekDates = getWeekDateKeys(weekOffset).filter(d => d <= todayStr && history.hasOwnProperty(d));
+    const total = weekDates.reduce((sum, d) => sum + (getEntryCount(d) || 0), 0);
+    const avg = weekDates.length > 0 ? Math.round(total / weekDates.length) : 0;
+    const goalDays = weekDates.filter(d => (getEntryCount(d) || 0) >= getEntryGoal(d, goal)).length;
+
+    document.getElementById('weekStatTotal').textContent = total;
+    document.getElementById('weekStatAvg').textContent = avg;
+    document.getElementById('weekStatGoalDays').textContent = goalDays;
+  }
+
+  function renderMonthStats(){
+    const now = new Date();
+    const [ty, tm] = toJalaali(now.getFullYear(), now.getMonth() + 1, now.getDate());
+    const [jy, jm] = shiftJalaliMonth(ty, tm, monthOffset);
+    const monthDates = Object.keys(history).filter(d => {
+      const [gy, gm, gd] = d.split('-').map(Number);
+      const [dy, dm] = toJalaali(gy, gm, gd);
+      return dy === jy && dm === jm;
+    });
+    const total = monthDates.reduce((sum, d) => sum + (getEntryCount(d) || 0), 0);
+    const avg = monthDates.length > 0 ? Math.round(total / monthDates.length) : 0;
+    const goal = getCurrentGoal();
+    const goalDays = monthDates.filter(d => (getEntryCount(d) || 0) >= getEntryGoal(d, goal)).length;
+
+    monthTitleEl.textContent = PERSIAN_MONTH_NAMES[jm - 1] + ' ' + jy + ' (' + monthDates.length + ' روز ثبت‌شده)';
+    statTotalEl.textContent = total;
+    statAvgEl.textContent = avg;
+    statGoalDaysEl.textContent = goalDays;
+
+    document.getElementById('monthNextBtn').disabled = monthOffset >= 0;
+  }
+
+  // current streak of consecutive days meeting the goal; an unfinished "today"
+  // doesn't break the streak, it just isn't counted until it's met
+  function computeStreak(){
+    const goal = getCurrentGoal();
+    const d = new Date();
+    if ((getEntryCount(todayKey(d)) || 0) < getEntryGoal(todayKey(d), goal)){
+      d.setDate(d.getDate() - 1);
+    }
+    let streak = 0;
+    while (true){
+      const key = todayKey(d);
+      const val = getEntryCount(key);
+      if (val === undefined || val < getEntryGoal(key, goal)) break;
+      streak += 1;
+      d.setDate(d.getDate() - 1);
+    }
+    return streak;
+  }
+
+  function renderStreak(){
+    const streak = computeStreak();
+    streakBannerEl.textContent = streak > 0
+      ? '🔥 ' + streak + ' روز متوالی به هدفت رسیدی!'
+      : 'هنوز رکوردی نداری — امروز رو شروع کن! 💧';
+  }
+
+  document.getElementById('reportBtn').addEventListener('click', () => {
+    weekOffset = 0;
+    monthOffset = 0;
+    renderStreak();
+    renderWeekChart();
+    renderWeekStats();
+    renderMonthStats();
+    reportOverlay.classList.remove('hidden');
+  });
+
+  document.getElementById('weekPrevBtn').addEventListener('click', () => {
+    weekOffset -= 1;
+    renderWeekChart();
+    renderWeekStats();
+  });
+
+  document.getElementById('weekNextBtn').addEventListener('click', () => {
+    if (weekOffset >= 0) return;
+    weekOffset += 1;
+    renderWeekChart();
+    renderWeekStats();
+  });
+
+  document.getElementById('monthPrevBtn').addEventListener('click', () => {
+    monthOffset -= 1;
+    renderMonthStats();
+  });
+
+  document.getElementById('monthNextBtn').addEventListener('click', () => {
+    if (monthOffset >= 0) return;
+    monthOffset += 1;
+    renderMonthStats();
+  });
+
+  document.getElementById('reportCloseBtn').addEventListener('click', () => {
+    reportOverlay.classList.add('hidden');
+  });
+
+  // --- midnight rollover safety ---
+  // if the app is left open across midnight, todayStr/count would otherwise go
+  // stale until a manual refresh, which could corrupt the new day's entry.
+  // Re-check the date whenever the tab regains focus, and periodically as a
+  // fallback for tabs that stay visible right through midnight.
+  function handlePossibleDateRollover(){
+    const newToday = todayKey();
+    if (newToday === todayStr) return;
+
+    todayStr = newToday;
+    count = getEntryCount(todayStr) || 0;
+    if (!(todayStr in history)){
+      history[todayStr] = { count: 0, goal: getCurrentGoal() };
+      saveState();
+    }
+
+    countEl.textContent = count;
+    updateFill();
+    refreshGoalDisplay();
+    updateProgressColors();
+    updateMinusState();
+  }
+
+  document.addEventListener('visibilitychange', () => {
+    if (document.visibilityState === 'visible') handlePossibleDateRollover();
+  });
+  setInterval(handlePossibleDateRollover, 60000);
+
+  // --- reminders ---
+  // Notifications only fire while this page is loaded somewhere (a background
+  // tab is fine, a fully closed browser is not) — true closed-app reminders
+  // need a service worker, which we'll add when we turn this into an
+  // installable PWA later.
+  const reminderOverlay = document.getElementById('reminderOverlay');
+  const reminderError = document.getElementById('reminderError');
+
+  document.getElementById('reminderBtn').addEventListener('click', () => {
+    document.getElementById('remEnabled').checked = reminder.enabled;
+    document.getElementById('remInterval').value = String(reminder.intervalHours);
+    document.getElementById('remStart').value = reminder.startHour;
+    document.getElementById('remEnd').value = reminder.endHour;
+    reminderError.style.display = 'none';
+    reminderOverlay.classList.remove('hidden');
+  });
+
+  document.getElementById('reminderSaveBtn').addEventListener('click', () => {
+    const wantsEnabled = document.getElementById('remEnabled').checked;
+    const intervalHours = parseFloat(document.getElementById('remInterval').value);
+    const startHour = parseInt(document.getElementById('remStart').value, 10);
+    const endHour = parseInt(document.getElementById('remEnd').value, 10);
+
+    const hoursValid = startHour >= 0 && startHour <= 23 && endHour >= 0 && endHour <= 23 && startHour < endHour;
+    if (!hoursValid){
+      reminderError.textContent = 'لطفاً یک بازه‌ی معتبر وارد کن (ساعت شروع باید قبل از ساعت پایان باشه).';
+      reminderError.style.display = 'block';
+      return;
+    }
+
+    function applyAndClose(enabled){
+      reminder = { enabled, intervalHours, startHour, endHour };
+      saveState();
+      reminderOverlay.classList.add('hidden');
+    }
+
+    if (wantsEnabled && !('Notification' in window)){
+      reminderError.textContent = 'مرورگرت از نوتیفیکیشن پشتیبانی نمی‌کنه.';
+      reminderError.style.display = 'block';
+      return;
+    }
+
+    if (wantsEnabled && Notification.permission !== 'granted'){
+      Notification.requestPermission().then((perm) => {
+        if (perm === 'granted'){
+          applyAndClose(true);
+        } else {
+          reminderError.style.display = 'block';
+        }
+      });
+      return;
+    }
+
+    applyAndClose(wantsEnabled);
+  });
+
+  function checkReminder(){
+    if (!reminder.enabled) return;
+    if (!('Notification' in window) || Notification.permission !== 'granted') return;
+
+    const now = new Date();
+    const hour = now.getHours() + now.getMinutes() / 60;
+    if (hour < reminder.startHour || hour >= reminder.endHour) return;
+
+    const intervalMs = reminder.intervalHours * 60 * 60 * 1000;
+    if (lastReminderAt && (now.getTime() - lastReminderAt) < intervalMs) return;
+
+    const goal = getCurrentGoal();
+    const notif = new Notification('وقت آب خوردنه! 💧', {
+      body: 'تا الان ' + count + ' از ' + goal + ' لیوان امروزت رو خوردی.'
+    });
+    notif.onclick = () => { window.focus(); notif.close(); };
+
+    lastReminderAt = now.getTime();
+    saveState();
+  }
+
+  setInterval(checkReminder, 60000);
+
+  // --- close affordances: X buttons + click-outside-to-close on every overlay ---
+  document.getElementById('profileCloseBtn').addEventListener('click', () => {
+    profileOverlay.classList.add('hidden');
+  });
+  document.getElementById('historyCloseXBtn').addEventListener('click', () => {
+    historyOverlay.classList.add('hidden');
+  });
+  document.getElementById('reportCloseXBtn').addEventListener('click', () => {
+    reportOverlay.classList.add('hidden');
+  });
+  document.getElementById('reminderCloseBtn').addEventListener('click', () => {
+    reminderOverlay.classList.add('hidden');
+  });
+
+  // --- backup: export/import all data as a JSON file ---
+  const backupOverlay = document.getElementById('backupOverlay');
+  const backupError = document.getElementById('backupError');
+  const backupSuccess = document.getElementById('backupSuccess');
+
+  document.getElementById('backupBtn').addEventListener('click', () => {
+    backupError.style.display = 'none';
+    backupSuccess.style.display = 'none';
+    backupOverlay.classList.remove('hidden');
+  });
+
+  document.getElementById('backupCloseBtn').addEventListener('click', () => {
+    backupOverlay.classList.add('hidden');
+  });
+
+  document.getElementById('backupExportBtn').addEventListener('click', () => {
+    const data = JSON.stringify({ profile, manualGoal, history, reminder, lastReminderAt }, null, 2);
+    const blob = new Blob([data], { type: 'application/json' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'water-backup-' + todayKey() + '.json';
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+  });
+
+  document.getElementById('backupImportBtn').addEventListener('click', () => {
+    document.getElementById('backupFileInput').click();
+  });
+
+  document.getElementById('backupFileInput').addEventListener('change', (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+
+    backupError.style.display = 'none';
+    backupSuccess.style.display = 'none';
+
+    const reader = new FileReader();
+    reader.onload = () => {
+      let parsed;
+      try{
+        parsed = JSON.parse(reader.result);
+      } catch (err){
+        backupError.textContent = 'فایل انتخاب‌شده یک فایل JSON معتبر نیست.';
+        backupError.style.display = 'block';
+        return;
+      }
+
+      const validHistory = parsed.history && typeof parsed.history === 'object';
+      if (!validHistory){
+        backupError.textContent = 'ساختار فایل با فایل پشتیبان این اپ مطابقت نداره.';
+        backupError.style.display = 'block';
+        return;
+      }
+
+      if (!confirm('این کار داده‌های فعلی رو با محتوای این فایل جایگزین می‌کنه. مطمئنی؟')) return;
+
+      profile = sanitizeProfile(parsed.profile);
+      manualGoal = (typeof parsed.manualGoal === 'number') ? parsed.manualGoal : null;
+      history = parsed.history;
+      reminder = { ...DEFAULT_REMINDER, ...(parsed.reminder || {}) };
+      lastReminderAt = (typeof parsed.lastReminderAt === 'number') ? parsed.lastReminderAt : null;
+      saveState();
+
+      count = getEntryCount(todayKey()) || 0;
+      countEl.textContent = count;
+      updateFill();
+      refreshGoalDisplay();
+      updateProgressColors();
+      updateMinusState();
+      applySeasonTheme();
+
+      backupSuccess.style.display = 'block';
+      e.target.value = '';
+    };
+    reader.readAsText(file);
+  });
+
+  document.getElementById('resetAppBtn').addEventListener('click', () => {
+    const sure = confirm('همه‌ی داده‌ها (تاریخچه، پروفایل، تنظیمات) و نسخه‌ی ذخیره‌شده‌ی اپ کاملاً پاک می‌شن و از اول شروع می‌کنی. مطمئنی؟');
+    if (!sure) return;
+
+    try{ localStorage.removeItem(STORAGE_KEY); } catch (e){}
+
+    const cleanupTasks = [];
+
+    if ('caches' in window){
+      cleanupTasks.push(
+        caches.keys().then((keys) => Promise.all(keys.map((key) => caches.delete(key))))
+      );
+    }
+
+    if ('serviceWorker' in navigator){
+      cleanupTasks.push(
+        navigator.serviceWorker.getRegistrations().then((regs) =>
+          Promise.all(regs.map((reg) => reg.unregister()))
+        )
+      );
+    }
+
+    Promise.all(cleanupTasks).finally(() => {
+      location.reload();
+    });
+  });
+
+  document.querySelectorAll('.overlay').forEach((ov) => {
+    ov.addEventListener('click', (e) => {
+      if (e.target === ov) ov.classList.add('hidden');
+    });
+  });
+
+  // --- PWA: register the service worker (only works when hosted over HTTPS,
+  // not when opened as a local/content:// file) ---
+  if ('serviceWorker' in navigator){
+    window.addEventListener('load', () => {
+      navigator.serviceWorker.register('service-worker.js').catch(() => {
+        // silently ignore — e.g. opened as a local file where SW isn't allowed
+      });
+    });
+  }
+</script>
+
+</body>
+</html>
